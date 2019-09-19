@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import br.edu.utfpr.dv.siacoes.log.UpdateEvent;
 import br.edu.utfpr.dv.siacoes.model.SigacConfig;
 
-public class SigacConfigDAO {
+public class SigacConfigDAO implements INegocio{
 	
 	public SigacConfig findByDepartment(int idDepartment) throws SQLException{
 		Connection conn = null;
@@ -56,6 +56,7 @@ public class SigacConfigDAO {
 			stmt.setInt(2, config.getMaxFileSize());
 			stmt.setInt(3, config.getDepartment().getIdDepartment());
 			
+                        
 			stmt.execute();
 			
 			new UpdateEvent(conn).registerUpdate(idUser, config);
@@ -70,13 +71,13 @@ public class SigacConfigDAO {
 	}
 	
 	private SigacConfig loadObject(ResultSet rs) throws SQLException{
-		SigacConfig config = new SigacConfig();
+	//	SigacConfig config = new SigacConfig();
 		
 		config.getDepartment().setIdDepartment(rs.getInt("idDepartment"));
 		config.setMinimumScore(rs.getDouble("minimumScore"));
 		config.setMaxFileSize(rs.getInt("maxfilesize"));
 		
-		return config;
+		//return config;
 	}
 
 }
