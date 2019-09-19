@@ -21,21 +21,17 @@ import java.util.Set;
 
 public abstract class TemplateDAO<T> {
 
-    protected abstract String getStringSQLloadObject();
+    protected abstract void getStringSQLloadObject();
 
     protected abstract void ormloadObject(PreparedStatement statement, T objeto) throws SQLException;
 
     public final Set<T> loadObject(ResultSet rs) throws SQLException{
-        try (Connection conn = DriverManager.getConnection("jdbc:derby:memory:database;create=true")) {
-            var config = new HashSet<T>();            
+        var config = new HashSet<T>();            
 
-            return config;
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+        return config;
     }
 
-    protected abstract String getStringSQLsave();
+    protected abstract String getStringSQLsave(Connection conn);
 
     protected abstract void ormsave(ResultSet result, Set<T> resultado) throws SQLException;
 
@@ -46,7 +42,7 @@ public abstract class TemplateDAO<T> {
 
         try{
             Set<T> resultado = new HashSet<T>();
-            conn = ConnectionDAO.getInstance().getConnection();
+            conn = ConnectionDAO.getInstance().getConnection(conn);
               String sql = getStringSQLsave();
             
             PreparedStatement statement = conn.prepareStatement(sql);
@@ -70,7 +66,7 @@ public abstract class TemplateDAO<T> {
     }
     
     
-    protected abstract String getStringSQLfindByDepartment();
+    protected abstract String getStringSQLfindByDepartment(int id);
 
     protected abstract void ormfindByDepartment(ResultSet result, Set<T> resultado) throws SQLException;
 
@@ -104,40 +100,4 @@ public abstract class TemplateDAO<T> {
         }
     }
     
-/*
-    protected abstract String getStringSQLExcluir();
-
-    public final void excluir(int id) {
-
-        try (Connection conn = DriverManager.getConnection("jdbc:derby:memory:database;create=true")) {
-
-            String sql = getStringSQLExcluir();
-
-            PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setInt(1, id);
-
-            statement.executeUpdate();
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
-    
-    protected abstract String getStringSQLAlterar();
-    protected abstract void ormAlterar(PreparedStatement statement, T objeto) throws SQLException;
-
-    public final void alterar(T objeto) {
-        try (Connection conn = DriverManager.getConnection("jdbc:derby:memory:database;create=true")) {
-
-            String sql = getStringSQLAlterar();
-
-            PreparedStatement statement = conn.prepareStatement(sql);
-            ormAlterar(statement, objeto);
-            
-            statement.executeUpdate();
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }*/
 }

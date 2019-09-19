@@ -9,8 +9,9 @@ import br.edu.utfpr.dv.siacoes.log.UpdateEvent;
 import br.edu.utfpr.dv.siacoes.model.SigetConfig;
 import br.edu.utfpr.dv.siacoes.model.SigetConfig.AttendanceFrequency;
 import br.edu.utfpr.dv.siacoes.model.SigetConfig.SupervisorFilter;
+import java.util.Set;
 
-public class SigetConfigDAO {
+public class SigetConfigDAO implements INegocio<SigetConfig> {
 
 	public SigetConfig findByDepartment(int idDepartment) throws SQLException{
 		Connection conn = null;
@@ -118,5 +119,15 @@ public class SigetConfigDAO {
 		
 		return config;
 	}
+
+    @Override
+    public void incluir(SigetConfig objeto) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Set<SigetConfig> listar() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 	
 }
