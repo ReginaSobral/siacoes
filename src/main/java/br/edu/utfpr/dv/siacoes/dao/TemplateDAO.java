@@ -27,11 +27,11 @@ public abstract class TemplateDAO<T> {
 
     public final Set<T> loadObject(ResultSet rs) throws SQLException{
         var config = new HashSet<T>();            
-
+getStringSQLloadObject(ResultSet rs)
         return config;
     }
 
-    protected abstract String getStringSQLsave(Connection conn);
+    protected abstract Connection getStringSQLsave(Connection conn);
 
     protected abstract void ormsave(ResultSet result, Set<T> resultado) throws SQLException;
 
